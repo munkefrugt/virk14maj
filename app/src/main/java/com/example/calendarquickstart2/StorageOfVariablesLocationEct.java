@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class StorageOfVariablesLocationEct extends AppCompatActivity {
     String location;
-    String arrivalTime;
+    String eventStartTime;
     /*
     private final String travelLocation;
     private final String arrivalTime;
@@ -34,7 +34,7 @@ public class StorageOfVariablesLocationEct extends AppCompatActivity {
         if (extras != null) {
             location = extras.getString("Location String");
             Log.i("location",location);
-            arrivalTime = extras.getString("Time String");
+            eventStartTime = extras.getString("Time String");
             //Log.i("arrivalTime",arrivalTime);
 
 
@@ -42,7 +42,7 @@ public class StorageOfVariablesLocationEct extends AppCompatActivity {
             view.setText(location);
 
             TextView view1 = (TextView) findViewById(R.id.time);
-            view1.setText(arrivalTime);
+            view1.setText(eventStartTime);
         }
         /*TextView storageView = (TextView) findViewById(R.id.storage);
         storageView.setText(travelLocation);

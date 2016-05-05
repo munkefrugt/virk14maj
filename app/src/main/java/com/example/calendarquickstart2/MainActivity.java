@@ -61,9 +61,11 @@ public class MainActivity extends Activity
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
 
-    private static final String BUTTON_TEXT = "Call Google Calendar API";
+    private static final String BUTTON_TEXT = "Call Google Calendar API and store data in string";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
+    String NextDestination;
+    DateTime NextEventStarttime;
 
     /**
      * Create the main activity.
@@ -110,15 +112,26 @@ public class MainActivity extends Activity
 
                 StorageButton.setEnabled(false);
                 mOutputText.setText("");
-                //getResultsFromApi();
                 StorageButton.setEnabled(true);
 
-                
+                // Now get the Api info, location and what time the event starts.
+
+                // displays the values an stores them in ield variables.
+                getResultsFromApi();
+
+                Log.i("pause", "onClick: ");
+                //Pause for 4 seconds
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 // send some info to the other activity
 
                 //send data med:
-                String location= "valby";
-                String time= "2131";
+                String location= NextDestination;
+                String eventStartTime= String.valueOf(NextEventStarttime);
 
                 Intent intent = new Intent(getApplicationContext(), StorageOfVariablesLocationEct.class);
                 //Intent intent2 = new Intent(getApplicationContext(), StorageOfVariablesLocationEct.class);
@@ -126,11 +139,11 @@ public class MainActivity extends Activity
                 // lad være med at ændre på "Extra String",
 
                 intent.putExtra("Location String",location);
-                intent.putExtra("Time String",time);
+                intent.putExtra("Time String",eventStartTime);
                 //intent.putExtra("Time String",time);
 
                 //intent.putExtra("Extra String",valueName);
-                
+
                 // shtart the new activity
                 startActivity(intent);
 
@@ -421,8 +434,9 @@ public class MainActivity extends Activity
             for (Event event : items) {
 
             //***************************************************************************************************// her er api Kaldet
-                String timeAt3am;
-                timeAt3am =  "2016-05-04T15:13:09.108+02:00";
+
+                // test time
+                String timeAt3am =  "2016-05-04T15:13:09.108+02:00";
                 DateTime start = event.getStart().getDateTime();
                 if (start == null) {
                     // All-day events don't have start times, so just use
@@ -436,9 +450,14 @@ public class MainActivity extends Activity
                         //String.format("%s  ", event.getLocation()));
                 //String  = event.getLocation();
                 //DateTime StartTimeOfEvent = toString(start);
-
+                NextDestination = event.getLocation();
+                NextEventStarttime = event.getStart().getDate();
                 Log.i("TAG", "getDataFromApi: "+  nowPlustimeTo3am);
-                Log.i("TAG", "getDataFromApi: "+  event.getStart());
+                Log.i("TAG", "getDataFromApi: event.getStart()"+  event.getStart());
+                Log.i("TAG", "getDataFromApi: event.getStart().getDate(): "+ event.getStart().getDate());
+                Log.i("TAG", "getDataFromApi: event.getStart().getDateTime(): "+ event.getStart().getDateTime());
+                Log.i("NextDestination", NextDestination);
+                Log.i("NextEventStarttime", String.valueOf(NextEventStarttime));
 
 
 
@@ -454,7 +473,7 @@ public class MainActivity extends Activity
         // denne methode retunere det næste klokkeslet hvor kl er 3 am i unix time
         public long getNext3amtimeInMilliSecAsUnixTime() {
 
-            // her får jeg værdien der er tilbage til kl er noget bestemt her kl midnat: 00:00
+            // her får jeg værdien der er tilbage til kl er noget bestemt her kl: 03:00 am
             Calendar c = Calendar.getInstance();
 
             // here the value is set to 27 hours (1 day and 3 hours)
