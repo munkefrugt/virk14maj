@@ -106,13 +106,33 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getBaseContext(), StorageOfVariablesLocationEct.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getBaseContext(), StorageOfVariablesLocationEct.class);
+
                 StorageButton.setEnabled(false);
                 mOutputText.setText("");
                 //getResultsFromApi();
                 StorageButton.setEnabled(true);
 
+                
+                // send some info to the other activity
+
+                //send data med:
+                String location= "valby";
+                String time= "2131";
+
+                Intent intent = new Intent(getApplicationContext(), StorageOfVariablesLocationEct.class);
+                //Intent intent2 = new Intent(getApplicationContext(), StorageOfVariablesLocationEct.class);
+
+                // lad være med at ændre på "Extra String",
+
+                intent.putExtra("Location String",location);
+                intent.putExtra("Time String",time);
+                //intent.putExtra("Time String",time);
+
+                //intent.putExtra("Extra String",valueName);
+                
+                // shtart the new activity
+                startActivity(intent);
 
             }
         });
