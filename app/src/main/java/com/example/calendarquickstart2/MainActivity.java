@@ -105,12 +105,15 @@ public class MainActivity extends Activity
         StorageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(getBaseContext(), StorageOfVariablesLocationEct.class);
+                startActivity(intent);
                 StorageButton.setEnabled(false);
                 mOutputText.setText("");
                 //getResultsFromApi();
                 StorageButton.setEnabled(true);
 
-                
+
             }
         });
         activityLayout.addView(StorageButton);
