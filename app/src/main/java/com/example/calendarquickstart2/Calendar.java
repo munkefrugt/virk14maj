@@ -63,8 +63,9 @@ public class Calendar extends Activity
     private static final String BUTTON_TEXT = "Call Google Calendar API and store data in string";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
-    String NextDestination;
+    String destination;
     DateTime NextEventStarttime;
+    String eventName;
 
     /**
      * Create the main activity.
@@ -135,24 +136,34 @@ public class Calendar extends Activity
                 // send some info to the other activity
 
                 //send data med:
-                String location= NextDestination;
+
+                // change to strig for making it esier to handle:
                 String eventStartTime= String.valueOf(NextEventStarttime);
                 Log.i("NextEventStarttime", "onClick: NextEventStarttime  :"+NextEventStarttime);
-                Log.i("NextDestination", "onClick: NextDestination  :"+NextDestination);
+                Log.i("destination", "onClick: destination  :"+ destination);
 
-                Intent intent = new Intent(getApplicationContext(), StorageOfVariablesLocationEct.class);
+                //Intent intent = new Intent(getApplicationContext(), StorageOfVariablesLocationEct.class);
                 //Intent intent2 = new Intent(getApplicationContext(), StorageOfVariablesLocationEct.class);
 
                 // lad være med at ændre på "Extra String",
 
-                intent.putExtra("Location String",location);
-                intent.putExtra("Time String",eventStartTime);
+                // we are getting the desired arival time and the destination and the origin from the calendar api.
+
+                // send the collected info from the calender api:
+                // eventstart time,
+                // destination
+                // origin
+
+                Intent intentGson = new Intent(getApplicationContext(), Gson.class);
+                intentGson.putExtra("destination",destination);
+                intentGson.putExtra("eventStartTime",eventStartTime);
+                intentGson.putExtra("eventName",eventName);
                 //intent.putExtra("Time String",time);
 
                 //intent.putExtra("Extra String",valueName);
 
                 // shtart the new activity
-                startActivity(intent);
+                startActivity(intentGson);
 
             }
         });
@@ -457,15 +468,15 @@ public class Calendar extends Activity
                         //String.format("%s  ", event.getLocation()));
                 //String  = event.getLocation();
                 //DateTime StartTimeOfEvent = toString(start);
-                NextDestination = event.getLocation();
+                destination = event.getLocation();
                 NextEventStarttime = event.getStart().getDateTime();
-
+                eventName=event.getSummary();
                 // checks:
                 Log.i("TAG", "getDataFromApi: "+  nowPlustimeTo3am);
                 Log.i("TAG", "getDataFromApi: event.getStart()"+  event.getStart());
                 Log.i("TAG", "getDataFromApi: event.getStart().getDate(): "+ event.getStart().getDate());
                 Log.i("TAG", "getDataFromApi: event.getStart().getDateTime(): "+ event.getStart().getDateTime());
-                Log.i("NextDestination", NextDestination);
+                Log.i("destination", destination);
                 Log.i("NextEventStarttime", String.valueOf(NextEventStarttime));
 
 
