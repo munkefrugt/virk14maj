@@ -17,21 +17,22 @@ public class Gson extends AppCompatActivity {
     ListView listView;
     Response responseObj;
 
-    String origin = "valby st";
+    String origin1 = "valby st";
     String destination= "Dyssegård st";
 
     String mode="transit";
     String departure_time= String.valueOf(System.currentTimeMillis()+1000000);
     //Test
     // &arrival_time=1462479888
-    String test= "https://maps.googleapis.com/maps/api/directions/json?origin=valby&destination=dysseg%C3%A5rd&arrival_time=1462479888&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
-    String url = "https://maps.googleapis.com/maps/api/directions/json?origin=valby&destination=dysseg%C3%A5rd&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
+    String test= "https://maps.googleapis.com/maps/api/directions/json?origin1=valby&destination=dysseg%C3%A5rd&arrival_time=1462479888&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
+    String url = "https://maps.googleapis.com/maps/api/directions/json?origin1=valby&destination=dysseg%C3%A5rd&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
     com.google.gson.Gson gson;
     AsyncHttpClient client;
     private GoogleApiClient client2;
     String startAdress;
     private String endDestination;
     String arrival_time;
+    private String end_destination;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,28 @@ public class Gson extends AppCompatActivity {
 
             }
         });
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String origin = extras.getString("origin");
+            Log.i("TAG",origin);
+            String destination = extras.getString("destination");
+            Log.i("TAG",destination);
+
+            Log.i("tag", "onCreate: origin:"+origin);
+            Log.i("tag", "onCreate: end_destination:"+destination);
+            /*
+            TextView view = (TextView) findViewById(R.id.edit_message);
+            view.setText(value);
+
+            TextView view2 = (TextView) findViewById(R.id.edit_message2);
+            view2.setText(value2);
+            */
+
+        }
+
+
+
 
 
     }

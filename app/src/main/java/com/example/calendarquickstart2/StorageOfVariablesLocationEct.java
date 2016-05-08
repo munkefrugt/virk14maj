@@ -25,7 +25,7 @@ public class StorageOfVariablesLocationEct extends AppCompatActivity {
         setContentView(R.layout.activity_storage_of_variables_location_ect);
 
         Intent intent = getIntent();
-        Log.i("TAG", "onCreate: ");
+        Log.i("TAG", "onCreate: StorageOfVariablesLocationEct");
 
 
 
@@ -52,11 +52,25 @@ public class StorageOfVariablesLocationEct extends AppCompatActivity {
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
+
+        try {
+            Thread.sleep(3000);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
         Log.i("Tag", "onCreate: Call Gson");
         // call the gson class
-        //Intent intentGson = new Intent(getApplicationContext(), Gson.class);
+        Intent intentGson = new Intent(getApplicationContext(), Gson.class);
 
-      //  startActivity(intentGson);
+        // send data to the gson class
+        String origin= "enghave";
+        // lad være med at ændre på "Extra String",
+
+        intentGson.putExtra("origin",origin);
+        String destination="emdrup";
+        intentGson.putExtra("destination",destination);
+
+        startActivity(intentGson);
 
 
     }
