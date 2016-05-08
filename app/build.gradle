@@ -31,7 +31,13 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
     compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.google.android.gms:play-services-identity:8.4.0'
+    //compile 'com.google.android.gms:play-services-identity:8.4.0'
     compile 'pub.devrel:easypermissions:0.1.5'
     compile 'com.android.support:design:23.3.0'
+    testCompile 'junit:junit:4.12'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'org.immutables:gson:2.1.16'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+
 }

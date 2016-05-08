@@ -21,4 +21,13 @@
         android:layout_marginBottom="174dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Press to get to Gson"
+        android:onClick="goToGsonActivity"
+        android:id="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="171dp" />
 </RelativeLayout>

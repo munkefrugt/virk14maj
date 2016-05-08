@@ -47,7 +47,23 @@ public class StorageOfVariablesLocationEct extends AppCompatActivity {
         // Now clean the data:
         extractTheTime();
 
+        try {
+            Thread.sleep(3000);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        Log.i("Tag", "onCreate: Call Gson");
+        // call the gson class
+        //Intent intentGson = new Intent(getApplicationContext(), Gson.class);
+
+      //  startActivity(intentGson);
+
+
     }
+
+
+
+
     // here we split the DateTime type to something usefull.
     private void extractTheTime() {
 

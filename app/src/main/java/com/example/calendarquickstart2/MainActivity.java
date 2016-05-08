@@ -26,7 +26,42 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    //**********************************************************************************************
+    //**********************************************************************************************
+    public void goTonextActivity(View view)
+    {
+        //Den helt skrabede version.
+        // husk at når der skabes en ny activity skal man vælge en empty activity da der skal laves en parent:
+        // her er linket:
+        // http://developer.android.com/training/basics/firstapp/starting-activity.html
+        // Så skaber den selv alle de ander xml filer der er nødvendige.
+
+        // this er context, som skal sendes med.
+        //Intent intent = new Intent(this, Main2Activity.class);
+
+        //send data med:
+
+        String valueName= "Hi there";
+        // lad være med at ændre på "Extra String",
+
+        /*
+        intent.putExtra("Extra String",valueName);
+        String valueName2="Hello again!";
+        intent.putExtra("Extra String2",valueName2);
+        */
+
+        // shtart the new activity
+
+        //Intent intent = new Intent(getApplicationContext(), Gson.class);
+        //startActivity(intent);
+
 
     }
+    //**********************************************************************************************
+    //**********************************************************************************************
+
+
 
 }
