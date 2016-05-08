@@ -24,8 +24,7 @@ public class Gson extends AppCompatActivity {
     String departure_time;//= String.valueOf(System.currentTimeMillis()+1000000);
     //Test
     // &arrival_time=1462479888
-    String test= "https://maps.googleapis.com/maps/api/directions/json?origin1=valby&destination=dysseg%C3%A5rd&arrival_time=1462479888&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
-    String url = "https://maps.googleapis.com/maps/api/directions/json?origin=valby%20station&destination=n%C3%B8rrebro%20st&mode=transit&key=AIzaSyAdsyGsiSh_nIIVuC7LAe27eE6r2mMBuK4";
+    String test= "https://maps.googleapis.com/maps/api/directions/json?origin=valby&destination=dysseg%C3%A5rd&arrival_time=1462479888&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
     com.google.gson.Gson gson;
     AsyncHttpClient client;
     private GoogleApiClient client2;
@@ -41,37 +40,9 @@ public class Gson extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        client = new AsyncHttpClient();
 
-        client.get(Gson.this, url, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                String responestr = new String(responseBody);
 
-                // instatiate gson object.
-                gson = new com.google.gson.Gson();
-                responseObj = gson.fromJson(responestr,Response.class);
-
-                startAdress =responseObj.getRoutes().get(0).getLegs().get(0).getStart_address();
-
-                // return this the departre tme to the alarm clock.
-                departure_time =responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getText();
-                Log.i("departure_time", "Gson onSuccess: departure_time "+ departure_time);
-                //endDestination =responseObj.getRoutes().get(0).getLegs().get(0).getEnd_address();
-
-                //departure_time =responseObj.getRoutes().get(0).getLegs().get(0).getEnd_address();
-                // husk man kan få arrival time i unix eller i am/pm
-                //arrival_time = String.valueOf(responseObj.getRoutes().get(0).getLegs().get(0).getArrival_time().getValue());
-
-                Log.i("Gson startAdress", startAdress);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.i("gsonFaliure", "onFailure: ");
-            }
-        });
 
         // recive data:
 
@@ -80,7 +51,6 @@ public class Gson extends AppCompatActivity {
             // User gives us eventTimeMillis
 
         // return departure time to the alarmclock.
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -98,7 +68,7 @@ public class Gson extends AppCompatActivity {
             Log.i("tag", "Gson onCreate: eventTimeMillis:"+ eventTimeMillis);
             //check and compare http://www.epochconverter.com/
 
-            Log.i("tag", "Gson onCreate: destination:"+destination);
+            Log.i("tag", "Gson onCreate: destination test1:"+destination);
             Log.i("tag", "Gson onCreate: eventName:"+eventName);
 
             // extract the time from the eventTimeMillis (ex. eventTimeMillis:2016-05-09T07:00:00.000+02:00 - to 07:00
@@ -113,6 +83,49 @@ public class Gson extends AppCompatActivity {
             */
 
         }
+
+
+        Log.i("destination test", "onCreate: destination test"+destination);
+        //String urltest2 = "https://maps.googleapis.com/maps/api/directions/json?origin=enghave%20station&destination=emdrup&mode=transit&arrival_time="+eventTimeMillisAsString +"&key=AIzaSyAdsyGsiSh_nIIVuC7LAe27eE6r2mMBuK4";
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=enghave&destination=valby&arrival_time=1462773600000&mode=transit&key=AIzaSyAdsyGsiSh_nIIVuC7LAe27eE6r2mMBuK4";
+        Log.i("URL test", "onCreate: " + url);
+
+        // MAKE API CALLS
+        client = new AsyncHttpClient();
+        client.get(Gson.this, url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                String responestr = new String(responseBody);
+
+                // instatiate gson object.
+                gson = new com.google.gson.Gson();
+                responseObj = gson.fromJson(responestr,Response.class);
+
+                startAdress =responseObj.getRoutes().get(0).getLegs().get(0).getStart_address();
+
+                // return this the departre tme to the alarm clock.
+                departure_time =responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getText();
+                Log.i("departure_time", "Gson onSuccess: departure_time "+ departure_time);
+
+                // check if its the right end adress.
+                String destinationOutPutCheck =responseObj.getRoutes().get(0).getLegs().get(0).getEnd_address();
+                Log.i("destinationOutPutCheck", "Gson : destinationOutPutCheck "+ destinationOutPutCheck);
+
+
+
+                //departure_time =responseObj.getRoutes().get(0).getLegs().get(0).getEnd_address();
+                // husk man kan få arrival time i unix eller i am/pm
+                //arrival_time = String.valueOf(responseObj.getRoutes().get(0).getLegs().get(0).getArrival_time().getValue());
+
+                Log.i("Gson startAdress", startAdress);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.i("gsonFaliure", "onFailure: ");
+            }
+        });
 
 
 
