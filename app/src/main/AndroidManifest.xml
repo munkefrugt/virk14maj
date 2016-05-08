@@ -29,8 +29,15 @@
         <activity
             android:name=".Calendar"
             android:label="Calendar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Gson"
+            android:label="@string/title_activity_gson"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.calendarquickstart2.MainActivity" />
         </activity>
     </application>
 

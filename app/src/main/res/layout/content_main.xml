@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:text="Press to get to Gson"
         android:onClick="goToGsonActivity"
-        android:id="@+id/button"
+        android:id="@+id/buttontoGson"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="171dp" />
 </RelativeLayout>

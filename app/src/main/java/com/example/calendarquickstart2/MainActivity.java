@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     //**********************************************************************************************
     //**********************************************************************************************
-    public void goTonextActivity(View view)
+    public void goToGsonActivity(View view)
     {
         //Den helt skrabede version.
         // husk at når der skabes en ny activity skal man vælge en empty activity da der skal laves en parent:
@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         // shtart the new activity
 
-        //Intent intent = new Intent(getApplicationContext(), Gson.class);
-        //startActivity(intent);
+        Intent intentGson = new Intent(getApplicationContext(), Gson.class);
+        startActivity(intentGson);
 
 
     }
