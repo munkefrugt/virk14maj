@@ -140,6 +140,12 @@ public class Calendar extends Activity
                 // change to strig for making it esier to handle:
                 String eventStartTime= String.valueOf(NextEventStarttime);
                 Log.i("NextEventStarttime", "onClick: NextEventStarttime  :"+NextEventStarttime);
+
+                // convert the Datetime to unix time:
+
+
+
+                // test destination..
                 Log.i("destination", "onClick: destination  :"+ destination);
 
                 //Intent intent = new Intent(getApplicationContext(), StorageOfVariablesLocationEct.class);
@@ -154,9 +160,14 @@ public class Calendar extends Activity
                 // destination
                 // origin
 
+                // convert Date time to milli sec.
+                long eventTimeMillis = NextEventStarttime.getValue();
+                // check the value
+                Log.i("eventTimeMillis", "onClick: "+eventTimeMillis);
+
                 Intent intentGson = new Intent(getApplicationContext(), Gson.class);
                 intentGson.putExtra("destination",destination);
-                intentGson.putExtra("eventStartTime",eventStartTime);
+                intentGson.putExtra("eventTimeMillis",eventTimeMillis);
                 intentGson.putExtra("eventName",eventName);
                 //intent.putExtra("Time String",time);
 

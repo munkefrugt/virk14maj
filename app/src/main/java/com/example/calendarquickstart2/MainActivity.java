@@ -8,9 +8,10 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    // we are getting the desired arival time and the destinationfrom the calendar api.
-
-    // send it to the Gson class, togther with the point of origin, that we get from the user.
+    // we are getting the desired arival time in (type)DateTime and the destinationfrom the calendar api.
+    // convert time to unix time
+    //
+    // send the 3 inputs to the Gson class, togther with the point of origin, that we get from the user.
     // to to return the departure.
     // We send the departure time to the alarm clock, that sets the time some time erlier than the departure,
     // default 60 minnuttes.

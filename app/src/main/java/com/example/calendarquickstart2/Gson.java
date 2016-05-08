@@ -30,7 +30,7 @@ public class Gson extends AppCompatActivity {
     AsyncHttpClient client;
     private GoogleApiClient client2;
     String startAdress;
-    String eventStartTime;
+    long eventTimeMillis;
     String eventName;
 
     @Override
@@ -75,8 +75,8 @@ public class Gson extends AppCompatActivity {
         // recive data:
 
             // destination
-            // eventStartTime
-            // User gives us eventStartTime
+            // eventTimeMillis
+            // User gives us eventTimeMillis
 
         // return departure time to the alarmclock.
 
@@ -86,14 +86,20 @@ public class Gson extends AppCompatActivity {
         {
             eventName = extras.getString("eventName");
             Log.i("TAG", eventName);
-            eventStartTime = extras.getString("eventStartTime");
-            Log.i("TAG", eventStartTime);
+            eventTimeMillis = extras.getLong("eventTimeMillis");
+            Log.i("TAG", String.valueOf(eventTimeMillis));
             destination = extras.getString("destination");
             Log.i("TAG",destination);
 
-            Log.i("tag", "Gson onCreate: eventStartTime:"+ eventStartTime);
+            Log.i("tag", "Gson onCreate: eventTimeMillis:"+ eventTimeMillis);
+            //check and compare http://www.epochconverter.com/
+
             Log.i("tag", "Gson onCreate: destination:"+destination);
             Log.i("tag", "Gson onCreate: eventName:"+eventName);
+
+            // extract the time from the eventTimeMillis (ex. eventTimeMillis:2016-05-09T07:00:00.000+02:00 - to 07:00
+
+
             /*
             TextView view = (TextView) findViewById(R.id.edit_message);
             view.setText(value);
