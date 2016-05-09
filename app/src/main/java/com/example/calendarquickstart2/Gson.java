@@ -32,6 +32,7 @@ public class Gson extends AppCompatActivity {
     String enventTimeinSec;
     String eventName;
     String eventTimeMillisAsString;
+    private String finalDetination;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,8 @@ public class Gson extends AppCompatActivity {
             Log.i("TAG", String.valueOf(eventTimeMillis));
             destination = extras.getString("destination");
             Log.i("TAG",destination);
-
+            finalDetination=splitdestinationString(destination);
+            Log.i("tag", "Gson onCreate: finalDetination :"+ finalDetination);
             Log.i("tag", "Gson onCreate: eventTimeMillis from calendar API:"+ eventTimeMillis);
 
             // convert the type long to string so it can be used in the URL, and devide by 1000, because
@@ -92,7 +94,7 @@ public class Gson extends AppCompatActivity {
 
         Log.i("destination test", "onCreate: destination test"+destination);
         //String urltest2 = "https://maps.googleapis.com/maps/api/directions/json?origin=enghave%20station&destination=emdrup&mode=transit&arrival_time="+eventTimeMillisAsString +"&key=AIzaSyAdsyGsiSh_nIIVuC7LAe27eE6r2mMBuK4";
-        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=valby&destination=dysseg%C3%A5rd&arrival_time="+enventTimeinSec+"&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=valby st&destination="+finalDetination+"&arrival_time="+enventTimeinSec+"&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
         Log.i("URL test", "onCreate: " + url);
 
         // MAKE API CALLS
@@ -137,6 +139,21 @@ public class Gson extends AppCompatActivity {
 
 
 
+    }
+
+    private String splitdestinationString(String destination) {
+
+
+        String[] destinationParts = destination.split(".,");
+        String part_1 = destinationParts[0];
+        String part_2 = destinationParts[1];
+        // 034556
+        //String part4 = parts[3]; // 034556
+        System.out.println("destinationParts1  "+part_1);
+        System.out.println("destinationParts2  "+ part_2);
+
+
+        return part_1;
     }
 
 }
