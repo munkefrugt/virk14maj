@@ -24,12 +24,12 @@ public class Gson extends AppCompatActivity {
     String departure_time;//= String.valueOf(System.currentTimeMillis()+1000000);
     //Test
     // &arrival_time=1462479888
-    String test= "https://maps.googleapis.com/maps/api/directions/json?origin=valby&destination=dysseg%C3%A5rd&arrival_time=1462479888&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
     com.google.gson.Gson gson;
     AsyncHttpClient client;
     private GoogleApiClient client2;
     String startAdress;
     long eventTimeMillis;
+    String enventTimeinSec;
     String eventName;
     String eventTimeMillisAsString;
 
@@ -65,10 +65,16 @@ public class Gson extends AppCompatActivity {
             destination = extras.getString("destination");
             Log.i("TAG",destination);
 
-            Log.i("tag", "Gson onCreate: eventTimeMillis:"+ eventTimeMillis);
+            Log.i("tag", "Gson onCreate: eventTimeMillis from calendar API:"+ eventTimeMillis);
+
+            // convert the type long to string so it can be used in the URL, and devide by 1000, because
+            // it needs seconds not milliSec.
+            enventTimeinSec = String.valueOf(eventTimeMillis/1000);
+            Log.i("tag", "Gson onCreate: enventTimeinSec from calendar API:"+ enventTimeinSec);
+
             //check and compare http://www.epochconverter.com/
 
-            Log.i("tag", "Gson onCreate: destination test1:"+destination);
+            Log.i("tag", "Gson onCreate: destination from calendar API test1:"+destination);
             Log.i("tag", "Gson onCreate: eventName:"+eventName);
 
             // extract the time from the eventTimeMillis (ex. eventTimeMillis:2016-05-09T07:00:00.000+02:00 - to 07:00
@@ -84,10 +90,9 @@ public class Gson extends AppCompatActivity {
 
         }
 
-
         Log.i("destination test", "onCreate: destination test"+destination);
         //String urltest2 = "https://maps.googleapis.com/maps/api/directions/json?origin=enghave%20station&destination=emdrup&mode=transit&arrival_time="+eventTimeMillisAsString +"&key=AIzaSyAdsyGsiSh_nIIVuC7LAe27eE6r2mMBuK4";
-        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=enghave&destination=valby&arrival_time=1462773600000&mode=transit&key=AIzaSyAdsyGsiSh_nIIVuC7LAe27eE6r2mMBuK4";
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=valby&destination=dysseg%C3%A5rd&arrival_time="+enventTimeinSec+"&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
         Log.i("URL test", "onCreate: " + url);
 
         // MAKE API CALLS
