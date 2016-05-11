@@ -125,13 +125,6 @@ public class Calendar extends Activity
                 // displays the values an stores them in ield variables.
                 getResultsFromApi();
 
-                Log.i("pause", "onClick: ");
-                //Pause for 4 seconds
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
                 // send some info to the other activity
 
@@ -528,11 +521,13 @@ public class Calendar extends Activity
 
             // here the value is set to 27 hours (1 day and 3 hours)
             c.add(java.util.Calendar.DAY_OF_MONTH, 1); // milliseceonds to midnight
-            c.add(java.util.Calendar.HOUR_OF_DAY, 3);// change this value to change the time of the day now its set to 3.00 am.
+            c.set(java.util.Calendar.HOUR_OF_DAY, 0);// 
             c.set(java.util.Calendar.MINUTE, 0);
             c.set(java.util.Calendar.SECOND, 0);
             c.set(java.util.Calendar.MILLISECOND, 0);
-            long next3amtimeInmillisecAsUnixTime= c.getTimeInMillis();
+            //long next3amtimeInmillisecAsUnixTime= c.getTimeInMillis();
+
+            //*********************** slet det under her muligvis
             long howManyMillisecleftTo3amFromNow = (c.getTimeInMillis() - System.currentTimeMillis());
 
             System.out.println("tid i millisec til kl 3  : " + howManyMillisecleftTo3amFromNow);
@@ -554,8 +549,9 @@ public class Calendar extends Activity
             //long next3amtimeInmillisecAsUnixTime = System.currentTimeMillis() + howManyMillisecleftTo3amFromNow;
             // the result that gets returned:
             System.out.println("System.currentTimeMillis()  : " + System.currentTimeMillis());
-            System.out.println("return this value: " + next3amtimeInmillisecAsUnixTime);
 
+            long next3amtimeInmillisecAsUnixTime=howManyMillisecleftTo3amFromNow +System.currentTimeMillis();
+            System.out.println("return this value: next3amtimeInmillisecAsUnixTime : " + next3amtimeInmillisecAsUnixTime);
             return next3amtimeInmillisecAsUnixTime;
         }
          //*********************************************************************************************************************
