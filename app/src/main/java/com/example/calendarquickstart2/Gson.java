@@ -1,5 +1,6 @@
 package com.example.calendarquickstart2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -114,6 +115,7 @@ public class Gson extends AppCompatActivity {
                 // return this the departre tme to the alarm clock.
                 departure_time =responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getText();
                 Log.i("departure_time", "Gson onSuccess: departure_time "+ departure_time);
+                String arrival_time=responseObj.getRoutes().get(0).getLegs().get(0).getArrival_time().getText();
 
 
                 // check if its the right end adress.
@@ -127,6 +129,23 @@ public class Gson extends AppCompatActivity {
                 //arrival_time = String.valueOf(responseObj.getRoutes().get(0).getLegs().get(0).getArrival_time().getValue());
 
                 Log.i("Gson startAdress", startAdress);
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                String valueName= "Hi there";
+                // lad være med at ændre på "Extra String",
+
+                intent.putExtra("Extra String",departure_time);
+                String valueName2="Hello again!";
+                intent.putExtra("Extra String2",startAdress);
+                intent.putExtra("Extra String3",destination);
+                intent.putExtra("Extra String4",eventName);
+                intent.putExtra("Extra String5",arrival_time);
+
+                // shtart the new activity
+                startActivity(intent);
+
+
+
             }
 
             @Override

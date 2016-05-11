@@ -22,7 +22,7 @@ public class GoogleDirections extends AppCompatActivity {
     String destination;//= "Dyssegård st";
 
     String mode="transit";
-    String departure_time;//= String.valueOf(System.currentTimeMillis()+1000000);
+
     //Test
     // &arrival_time=1462479888
     com.google.gson.Gson gson;
@@ -34,10 +34,7 @@ public class GoogleDirections extends AppCompatActivity {
     String eventName;
     String eventTimeMillisAsString;
     private String finalDetination;
-
-
-
-
+    private String departureNew;
 
 
     public GoogleDirections(String destination, long eventTimeMillis, String eventName) {
@@ -67,10 +64,10 @@ public class GoogleDirections extends AppCompatActivity {
                 startAdress =responseObj.getRoutes().get(0).getLegs().get(0).getStart_address();
 
                 // return this the departre tme to the alarm clock.
-                departure_time =responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getText();
+                String departure_time = responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getText();
                 Log.i("departure_time", "Gson onSuccess: departure_time "+ departure_time);
 
-
+                departureNew=departure_time;
                 // check if its the right end adress.
                 String destinationOutPutCheck =responseObj.getRoutes().get(0).getLegs().get(0).getEnd_address();
                 Log.i("destinationOutPutCheck", "Gson : destinationOutPutCheck "+ destinationOutPutCheck);
@@ -90,10 +87,15 @@ public class GoogleDirections extends AppCompatActivity {
             }
         });
 
-
+        Log.i("tag", "GoogleDirections: departure_time test " + departureNew);
 
 
     }
 
 
+    public String getDepartureTime() {
+        Log.i("departure_time", "getDepartureTime: "+departureNew);
+        String departureTime=departureNew;
+        return departureTime;
+    }
 }

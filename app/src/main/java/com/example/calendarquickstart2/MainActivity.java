@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +25,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("Extra String");
+            Log.i("TAG",value);
+            String value2 = extras.getString("Extra String2");
+            Log.i("TAG",value);
+            String value3 = extras.getString("Extra String3");
+            Log.i("TAG",value3);
+            String value4 = extras.getString("Extra String4");
+            Log.i("TAG",value4);
+            String value5 = extras.getString("Extra String5");
+            Log.i("TAG",value5);
+
+            TextView view = (TextView) findViewById(R.id.departure_time);
+            view.setText(value);
+
+            TextView view2 = (TextView) findViewById(R.id.edit_message2);
+            view2.setText(value2);
+
+            TextView view3 = (TextView) findViewById(R.id.edit_message3);
+            view3.setText(value3);
+            TextView view4 = (TextView) findViewById(R.id.edit_message4);
+            view4.setText(value4);
+            TextView view5 = (TextView) findViewById(R.id.edit_message5);
+            view5.setText(value5);
+
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -33,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 
     }

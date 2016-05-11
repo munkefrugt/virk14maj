@@ -51,7 +51,7 @@ public class Calendar extends Activity
     GoogleAccountCredential mCredential;
     private TextView mOutputText;
     private Button mCallApiButton;
-    private Button StorageButton;
+    private Button DirectionsGoogleButton;
 
     ProgressDialog mProgress;
 
@@ -66,6 +66,7 @@ public class Calendar extends Activity
     String destination;
     DateTime NextEventStarttime;
     String eventName;
+    private long eventTimeMillis;
 
     /**
      * Create the main activity.
@@ -88,15 +89,20 @@ public class Calendar extends Activity
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
+
+
         mCallApiButton = new Button(this);
-        mCallApiButton.setText(BUTTON_TEXT);
+        mCallApiButton.setText("push me first to get the event from the calendar");
         mCallApiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCallApiButton.setEnabled(false);
                 mOutputText.setText("");
                 getResultsFromApi();
+
                 mCallApiButton.setEnabled(true);
+
+
             }
         });
         activityLayout.addView(mCallApiButton);
@@ -107,18 +113,18 @@ public class Calendar extends Activity
         //******************************************************************************************
         ////////////////////////////////////////////////////////////////////////////////////////////
 
-        StorageButton = new Button(this);
-        StorageButton.setText("Store data/gem data");
-        StorageButton.setOnClickListener(new View.OnClickListener() {
+        DirectionsGoogleButton = new Button(this);
+        DirectionsGoogleButton.setText("Push me afterwards to get API from google");
+        DirectionsGoogleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
 
-                StorageButton.setEnabled(false);
+                DirectionsGoogleButton.setEnabled(false);
                 // den grå text så først kommer når man trykker.
                 mOutputText.setText("");
-                StorageButton.setEnabled(true);
+                DirectionsGoogleButton.setEnabled(true);
 
                 // Now get the Api info, location and what time the event starts.
 
@@ -157,25 +163,28 @@ public class Calendar extends Activity
                 long eventTimeMillis = NextEventStarttime.getValue();
                 // check the value
                 Log.i("eventTimeMillis", "onClick: "+eventTimeMillis);
-                GoogleDirections directionsobj = new GoogleDirections(destination,eventTimeMillis,eventName);
-                /*
-                Intent intentDirections = new Intent(getApplicationContext(), Gson.class);
 
-                intentDirections.putExtra("destination",destination);
-                intentDirections.putExtra("eventTimeMillis",eventTimeMillis);
-                intentDirections.putExtra("eventName",eventName);
+                Intent intentGson = new Intent(getApplicationContext(), Gson.class);
+
+                intentGson.putExtra("destination",destination);
+                intentGson.putExtra("eventTimeMillis",eventTimeMillis);
+                intentGson.putExtra("eventName",eventName);
 
                 //intent.putExtra("Time String",time);
 
                 //intent.putExtra("Extra String",valueName);
 
                 // shtart the new activity
-                */
+
                 if(destination != null)
                 {
                     Log.i("destination set", "get departure time from google API");
+                    //GoogleDirections directionsobj = new GoogleDirections(destination,eventTimeMillis,eventName);
 
-                    //startActivity(intentDirections);
+                    //String departureTime=directionsobj.getDepartureTime();
+                    //Log.i("departureTime", "onClick: departureTime" + departureTime);
+
+                    startActivity(intentGson);
 
                 }
                 else
@@ -186,7 +195,7 @@ public class Calendar extends Activity
 
             }
         });
-        activityLayout.addView(StorageButton);
+        activityLayout.addView(DirectionsGoogleButton);
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -521,7 +530,7 @@ public class Calendar extends Activity
 
             // here the value is set to 27 hours (1 day and 3 hours)
             c.add(java.util.Calendar.DAY_OF_MONTH, 1); // milliseceonds to midnight
-            c.set(java.util.Calendar.HOUR_OF_DAY, 0);// 
+            c.set(java.util.Calendar.HOUR_OF_DAY, 0);//
             c.set(java.util.Calendar.MINUTE, 0);
             c.set(java.util.Calendar.SECOND, 0);
             c.set(java.util.Calendar.MILLISECOND, 0);

@@ -16,8 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="AlarmTid"
-        android:id="@+id/alarmTid"
+        android:text="departure"
+        android:id="@+id/departure_time"
         android:layout_marginBottom="174dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
@@ -40,4 +40,41 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="49dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="edit_message2"
+        android:id="@+id/edit_message2"
+        android:layout_alignTop="@+id/departure_time"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="42dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="edit_message3"
+        android:id="@+id/edit_message3"
+        android:layout_below="@+id/edit_message2"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="edit_message4"
+        android:id="@+id/edit_message4"
+        android:layout_below="@+id/edit_message3"
+        android:layout_alignEnd="@+id/edit_message3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="edit_message5"
+        android:id="@+id/edit_message5"
+        android:layout_below="@+id/edit_message4"
+        android:layout_alignEnd="@+id/edit_message4" />
 </RelativeLayout>
