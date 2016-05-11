@@ -1,8 +1,6 @@
 package com.example.calendarquickstart2;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -12,7 +10,10 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
 
-public class Gson extends AppCompatActivity {
+/**
+ * Created by v on 5/11/16.
+ */
+public class GoogleDirections extends AppCompatActivity {
 
     ListView listView;
     Response responseObj;
@@ -34,64 +35,18 @@ public class Gson extends AppCompatActivity {
     String eventTimeMillisAsString;
     private String finalDetination;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gson);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
 
 
 
 
-        // recive data:
+    public GoogleDirections(String destination, long eventTimeMillis, String eventName) {
+        Log.i("test", "GoogleDirections: ");
 
-            // destination
-            // eventTimeMillis
-            // User gives us eventTimeMillis
+        enventTimeinSec = String.valueOf(eventTimeMillis/1000);
 
-        // return departure time to the alarmclock.
+    // call api.
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null)
-        {
-            eventName = extras.getString("eventName");
-            Log.i("TAG", eventName);
-            eventTimeMillis = extras.getLong("eventTimeMillis");
-            // convert long to string:
-            eventTimeMillisAsString = String.valueOf(eventTimeMillis);
-
-            Log.i("TAG", String.valueOf(eventTimeMillis));
-            destination = extras.getString("destination");
-            Log.i("TAG",destination);
-            finalDetination=splitdestinationString(destination);
-            Log.i("tag", "Gson onCreate: finalDetination :"+ finalDetination);
-            Log.i("tag", "Gson onCreate: eventTimeMillis from calendar API:"+ eventTimeMillis);
-
-            // convert the type long to string so it can be used in the URL, and devide by 1000, because
-            // it needs seconds not milliSec.
-            enventTimeinSec = String.valueOf(eventTimeMillis/1000);
-            Log.i("tag", "Gson onCreate: enventTimeinSec from calendar API:"+ enventTimeinSec);
-
-            //check and compare http://www.epochconverter.com/
-
-            Log.i("tag", "Gson onCreate: destination from calendar API test1:"+destination);
-            Log.i("tag", "Gson onCreate: eventName:"+eventName);
-
-            // extract the time from the eventTimeMillis (ex. eventTimeMillis:2016-05-09T07:00:00.000+02:00 - to 07:00
-
-
-            /*
-            TextView view = (TextView) findViewById(R.id.edit_message);
-            view.setText(value);
-
-            TextView view2 = (TextView) findViewById(R.id.edit_message2);
-            view2.setText(value2);
-            */
-
-        }
-        //"+finalDetination+"
         Log.i("destination test", "onCreate: destination test"+destination);
         //String urltest2 = "https://maps.googleapis.com/maps/api/directions/json?origin=enghave%20station&destination=emdrup&mode=transit&arrival_time="+eventTimeMillisAsString +"&key=AIzaSyAdsyGsiSh_nIIVuC7LAe27eE6r2mMBuK4";
         String url = "https://maps.googleapis.com/maps/api/directions/json?origin=valby st&destination="+destination+"&arrival_time="+enventTimeinSec+"&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
@@ -99,7 +54,7 @@ public class Gson extends AppCompatActivity {
 
         // MAKE API CALLS
         client = new AsyncHttpClient();
-        client.get(Gson.this, url, new AsyncHttpResponseHandler() {
+        client.get(GoogleDirections.this, url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
@@ -138,23 +93,7 @@ public class Gson extends AppCompatActivity {
 
 
 
-
-
     }
 
-    private String splitdestinationString(String destination) {
-
-
-        String[] destinationParts = destination.split(".,");
-        String part_1 = destinationParts[0];
-        String part_2 = destinationParts[1];
-        // 034556
-        //String part4 = parts[3]; // 034556
-        System.out.println("destinationParts1  "+part_1);
-        System.out.println("destinationParts2  "+ part_2);
-
-
-        return part_1;
-    }
 
 }
