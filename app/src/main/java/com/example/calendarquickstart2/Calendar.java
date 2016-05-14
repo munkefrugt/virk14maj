@@ -75,6 +75,8 @@ public class Calendar extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         Intent intent = getIntent();
 
         LinearLayout activityLayout = new LinearLayout(this);
@@ -89,6 +91,15 @@ public class Calendar extends Activity
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
+
+        // recieve origin from user:
+        /*Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("Extra String");
+            Log.i("TAG ","userinput origin"+value);
+
+
+        }*/
 
 
         mCallApiButton = new Button(this);

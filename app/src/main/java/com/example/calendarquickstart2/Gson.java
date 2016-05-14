@@ -126,7 +126,7 @@ public class Gson extends AppCompatActivity {
 
                 //departure_time =responseObj.getRoutes().get(0).getLegs().get(0).getEnd_address();
                 // husk man kan få arrival time i unix eller i am/pm
-                //arrival_time = String.valueOf(responseObj.getRoutes().get(0).getLegs().get(0).getArrival_time().getValue());
+                arrival_time = String.valueOf(responseObj.getRoutes().get(0).getLegs().get(0).getArrival_time().getValue());
 
                 Log.i("Gson startAdress", startAdress);
 

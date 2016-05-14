@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.calendarquickstart2.PopUp"
+    tools:showIn="@layout/activity_pop_up">
+
+    <TextClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textClock"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:background="#000000"
+        android:gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:textSize="14pt"
+        android:format24Hour="hh:mm"
+        android:format12Hour="@null"
+        android:text="@string/time_current" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:id="@+id/DatePopUp"
+        android:layout_marginTop="108dp"
+        android:text=" tirs. d. 21.04.16"
+        android:layout_below="@+id/textClock"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_below="@+id/DatePopUp"
+        android:layout_alignParentStart="true"
+        android:text="kl. 06.45" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:text="Møde på skolen"
+        android:layout_alignTop="@+id/editText"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText3"
+        android:layout_below="@+id/editText2"
+        android:layout_centerHorizontal="true"
+        android:text="Aflevere opgave" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:id="@+id/editText4"
+        android:layout_alignBottom="@+id/editText3"
+        android:layout_alignParentStart="true"
+        android:text="kl. 12.00" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Snooze i 10 min"
+        android:id="@+id/SnoozeButton"
+        android:layout_marginTop="85dp"
+        android:layout_below="@+id/editText3"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop Alarmen"
+        android:id="@+id/StopAlarmButton"
+        android:layout_below="@+id/SnoozeButton"
+        android:layout_centerHorizontal="true"
+        android:onClick=""/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText5"
+        android:layout_below="@+id/editText"
+        android:layout_alignEnd="@+id/DatePopUp" />
+
+</RelativeLayout>

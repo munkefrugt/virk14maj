@@ -22,25 +22,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Press to get to Gson"
-        android:onClick="goToGsonActivity"
-        android:id="@+id/buttontoGson"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="171dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="virk"
-        android:id="@+id/textView3"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,4 +58,43 @@
         android:id="@+id/edit_message5"
         android:layout_below="@+id/edit_message4"
         android:layout_alignEnd="@+id/edit_message4" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/writeOrigin"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="40dp"
+        android:layout_above="@+id/departure_time"
+        android:hint=" write home adress" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save home adres"
+        android:onClick="saveHomeLocationToString"
+        android:id="@+id/saveHomeLocation"
+        android:layout_alignTop="@+id/writeOrigin"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="kør notifikation"
+        android:onClick="setTime"
+        android:id="@+id/button"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/writeOrigin" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="stop alarmen"
+        android:onClick="stopAlarm"
+        android:id="@+id/stop_alarmen"
+        android:layout_below="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_marginTop="23dp" />
 </RelativeLayout>
