@@ -34,6 +34,7 @@ public class Gson extends AppCompatActivity {
     String eventName;
     String eventTimeMillisAsString;
     private String finalDetination;
+    String origin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,9 @@ public class Gson extends AppCompatActivity {
             Log.i("tag", "Gson onCreate: destination from calendar API test1:"+destination);
             Log.i("tag", "Gson onCreate: eventName:"+eventName);
 
+            origin = extras.getString("origin");
+            Log.i("TAG", "Gson origin"+origin);
+
             // extract the time from the eventTimeMillis (ex. eventTimeMillis:2016-05-09T07:00:00.000+02:00 - to 07:00
 
 
@@ -92,10 +96,11 @@ public class Gson extends AppCompatActivity {
             */
 
         }
+        Log.i("TAG", "onCreate: origin test2 "+origin);
         //"+finalDetination+"
         Log.i("destination test", "onCreate: destination test"+destination);
         //String urltest2 = "https://maps.googleapis.com/maps/api/directions/json?origin=enghave%20station&destination=emdrup&mode=transit&arrival_time="+eventTimeMillisAsString +"&key=AIzaSyAdsyGsiSh_nIIVuC7LAe27eE6r2mMBuK4";
-        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=valby st&destination="+destination+"&arrival_time="+enventTimeinSec+"&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+destination+"&arrival_time="+enventTimeinSec+"&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
         Log.i("URL test", "onCreate: " + url);
 
         // MAKE API CALLS
@@ -131,15 +136,13 @@ public class Gson extends AppCompatActivity {
                 Log.i("Gson startAdress", startAdress);
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                String valueName= "Hi there";
-                // lad være med at ændre på "Extra String",
 
                 intent.putExtra("Extra String",departure_time);
-                String valueName2="Hello again!";
                 intent.putExtra("Extra String2",startAdress);
                 intent.putExtra("Extra String3",destination);
                 intent.putExtra("Extra String4",eventName);
                 intent.putExtra("Extra String5",arrival_time);
+
 
                 // shtart the new activity
                 startActivity(intent);
@@ -151,6 +154,7 @@ public class Gson extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 Log.i("gsonFaliure", "onFailure: ");
+
             }
         });
 

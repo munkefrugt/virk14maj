@@ -67,6 +67,7 @@ public class Calendar extends Activity
     DateTime NextEventStarttime;
     String eventName;
     private long eventTimeMillis;
+    private String origin;
 
     /**
      * Create the main activity.
@@ -93,13 +94,14 @@ public class Calendar extends Activity
 
 
         // recieve origin from user:
-        /*Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            String value = extras.getString("Extra String");
-            Log.i("TAG ","userinput origin"+value);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+        {
+            origin = extras.getString("origin");
+            Log.i("TAG ","userinput origin "+origin);
 
 
-        }*/
+        }
 
 
         mCallApiButton = new Button(this);
@@ -180,6 +182,7 @@ public class Calendar extends Activity
                 intentGson.putExtra("destination",destination);
                 intentGson.putExtra("eventTimeMillis",eventTimeMillis);
                 intentGson.putExtra("eventName",eventName);
+                intentGson.putExtra("origin",origin);
 
                 //intent.putExtra("Time String",time);
 

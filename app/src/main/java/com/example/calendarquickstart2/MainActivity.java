@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText origin;
     Intent intent;
+    private String startlocation;
 
     // we are getting the desired arival time in (type)DateTime and the destinationfrom the calendar api.
     // convert time to unix time
@@ -59,12 +61,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent= new Intent(getApplicationContext(),Calendar.class);
-
+                intent.putExtra("origin", String.valueOf(startlocation));
                 startActivity(intent);
             }
         });
 
         origin = (EditText) findViewById(R.id.writeOrigin); // Jeg har tilføjet denne linje
+
+        // hvis origin ikke er null så gem den som string
+
+
+        String startPosition = String.valueOf(origin);
+        Log.i("origin", "onCreate: origin"+origin);
 
 
         recieveDatafromDirecetionsApi();
@@ -106,13 +114,16 @@ public class MainActivity extends AppCompatActivity {
                 //sæt lyd på fra din notificationsmanager.
                 notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
                 alarmTone = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                alarmTone.play();
 
 
 
                 //morningStart();
             }
         }, calendarMorning.getTimeInMillis()-calNow.getTimeInMillis());
+
+        // start pop up vindue
+        PopUpIntent = new Intent(getApplicationContext(), PopUpWindow.class);
+        startActivity(PopUpIntent);
     }
     //MORGENALARMPOPUP
     public void morningStart()
@@ -129,8 +140,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i("tag", "morningStart: calNow.getTime()"+calNow.getTime());
 
         ((AlarmManager) getSystemService(ALARM_SERVICE)).set(AlarmManager.RTC_WAKEUP, calendarMorning.getTimeInMillis(), PopUpPendingIntent);
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-  //      getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+       getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
     }
 
     //AFTENNOTIFIKATION
@@ -158,6 +169,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(PopUpIntent);
         ///***********startActivity(intentSettings);
         //morningCalendar = true;
+    }
+    public void testAlarm(View view)
+    {
+        Log.i("testAlarm", "testAlarm: ");
+        alarmTone.play();
+
     }
     public void stopAlarm(View view)
     {
@@ -254,13 +271,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void  saveHomeLocationToString(View view)
     {
+
+
         // get user input.
-        String startlocation = String.valueOf(origin.getText());
+        startlocation = String.valueOf(origin.getText());
         Log.i("startlocation", "onCreate:startlocation "+startlocation);
 
-        //String valueName= "Hi there";
-
-        //  intent.putExtra("Extra String",valueName);
+        // give a message
+        Toast toast = Toast.makeText(getApplicationContext(), "start location : "+ startlocation,
+                Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER|Gravity.LEFT, 0, 0);
+        toast.show();
 
     }
 
