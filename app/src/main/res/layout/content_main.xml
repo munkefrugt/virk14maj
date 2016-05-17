@@ -106,4 +106,5 @@
         android:layout_alignBottom="@+id/button"
         android:layout_alignEnd="@+id/edit_message2"
         android:onClick="testAlarm" />
+
 </RelativeLayout>

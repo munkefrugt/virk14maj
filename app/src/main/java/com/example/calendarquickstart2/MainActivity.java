@@ -15,7 +15,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     //****int morningMinute = (int) Notification_reciever.wakeUpMorningMinute;
     Intent PopUpIntent;
     Intent intentSettings;
-    java.util.Calendar calNow = java.util.Calendar.getInstance();
+    java.util.Calendar calenderTimeNow = java.util.Calendar.getInstance();
     public Uri notification;
     public Ringtone alarmTone;
     java.util.Calendar calendarMorning = java.util.Calendar.getInstance();
@@ -42,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
     Intent intent;
     private String startlocation;
     private String departureTime;
-    private int departureInUnixtime;
+    int departureInUnixtimeSec;
+    int departureInUnixtimeMilliSec;
+    private long readydepartureLong;
+    long departureTimemilliSecLongInsertFinal = 1463545376000L;
 
 
     // we are getting the desired arival time in (type)DateTime and the destinationfrom the calendar api.
@@ -69,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // test*****
+        Long currentTime = System.currentTimeMillis();
+        //forskel:
+        Long forskel = departureInUnixtimeMilliSec - currentTime;
+        Log.i("forskel", "onCreate: forskel " + forskel);
+        // test*****
+
         notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         alarmTone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
@@ -91,13 +100,16 @@ public class MainActivity extends AppCompatActivity {
         alarm_manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         //calendarMorning.set(Calendar.HOUR_OF_DAY, morningHour);
         //calendarMorning.add(java.util.Calendar.MINUTE, 1);
-        calendarMorning.add(java.util.Calendar.SECOND, 10);
+        calendarMorning.add(java.util.Calendar.SECOND, 20);
+
+        Log.i("TAG", "nutid sammenlign: "+ calenderTimeNow.getTime());
+        Log.i("TAG", "morgentid sammenlign: " + calendarMorning.getTime());
 
 
 
         //METODER
         //metode der sætter tidspunktet for popup-vinduet
-
+        morningStart();
         //Start lyd på alarmen når tiden er gået imellem nu og det satte tidspunkt, denne starter morgen popup-activiteten
         alarmAudio();
         //metode der laver kl.22-notifikationen
@@ -125,12 +137,12 @@ public class MainActivity extends AppCompatActivity {
 
                 //startNotification();
 
-                //morningStart();
+
             }
             // tiden der skal indsættes er ikke unix time, men tid i milisec siden appen er started,
             // så vil man gerne have den til at ringe efter 10 sec, kan man skrive 10000); på næste
             // linje i stedet
-        },4000);// calendarMorning.getTimeInMillis()-calNow.getTimeInMillis());
+        },4000);// calendarMorning.getTimeInMillis()-calenderTimeNow.getTimeInMillis());
 
         // start pop up vindue
         //***PopUpIntent = new Intent(getApplicationContext(), PopUpWindow.class);
@@ -147,18 +159,26 @@ public class MainActivity extends AppCompatActivity {
     {
         Log.i("TAG", "morningStart: nu skal den poppe up så man kan slukke den");
 
-        Log.i("calNowMilli", "morningStart: " + calNow.getTimeInMillis());
-        Log.i("calendarmorningMilli", "morningStart: " + calendarMorning.getTimeInMillis());
+        Log.i("calNowMilli", "morningStart: " + calenderTimeNow.getTimeInMillis());;
+        Log.i("tag", "morningStart: departureTimemilliSecLongInsertFinal " + departureTimemilliSecLongInsertFinal);
 
-        Intent PopUpIntent = new Intent(this, PopUp.class);
+        Intent PopUpIntent = new Intent(this, PopUpWindow.class);
         PendingIntent PopUpPendingIntent = PendingIntent.getActivity(MainActivity.this, 0, PopUpIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         // calendarMorning er det tidspunkt vor den skal starte pending intent
         Log.i("tag", "morningStart: calendarMorning.getTime"+calendarMorning.getTime());
-        Log.i("tag", "morningStart: calNow.getTime()"+calNow.getTime());
+        Log.i("tag", "morningStart: calenderTimeNow.getTime()"+ calenderTimeNow.getTime());
+        Log.i("tag", "morningStart: calenderTimeNow.getTime()"+ calenderTimeNow.getTime());
 
-        ((AlarmManager) getSystemService(ALARM_SERVICE)).set(AlarmManager.RTC_WAKEUP, calendarMorning.getTimeInMillis(), PopUpPendingIntent);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-       getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+
+        // den styre hvilket pending intent der bruges og på hvilket tidspunkt.
+
+        //Long totaltimeUnix = Long.parseLong(departureTime);
+        //Log.i("totaltimeUnix", "totaltimeUnix: " +totaltimeUnix);
+        ((AlarmManager) getSystemService(ALARM_SERVICE)).set(AlarmManager.RTC_WAKEUP, departureTimemilliSecLongInsertFinal, PopUpPendingIntent);
+        //((AlarmManager) getSystemService(ALARM_SERVICE)).set(AlarmManager.RTC_WAKEUP, calendarMorning.getTimeInMillis(), PopUpPendingIntent);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+   //    getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+
     }
 
     //AFTENNOTIFIKATION
@@ -182,8 +202,11 @@ public class MainActivity extends AppCompatActivity {
     {
         //
         //test
-        PopUpIntent = new Intent(getApplicationContext(), PopUpWindow.class);
-        startActivity(PopUpIntent);
+        //morningStart();
+
+        //PopUpIntent = new Intent(getApplicationContext(), PopUpWindow.class);
+
+        //startActivity(PopUpIntent);
         ///***********startActivity(intentSettings);
         //morningCalendar = true;
     }
@@ -191,6 +214,15 @@ public class MainActivity extends AppCompatActivity {
     {
         Log.i("testAlarm", "testAlarm: ");
         alarmTone.play();
+        Log.i("nu", "testAlarm: System.currentTimeMillis" + System.currentTimeMillis());
+        Log.i("forskel", "testAlarm: System.currentTimeMillis" + (departureTimemilliSecLongInsertFinal-System.currentTimeMillis()));
+
+        long forskelIMinnutter = ((departureTimemilliSecLongInsertFinal - System.currentTimeMillis()) / 1000) / 60;
+        Log.i("forskel", "testAlarm forskelITimer" + forskelIMinnutter);
+
+        long forskelITimer = ((departureTimemilliSecLongInsertFinal - System.currentTimeMillis()) / 1000) / 3600;
+        Log.i("forskel", "testAlarm forskelITimer" + forskelITimer);
+
 
     }
     public void stopAlarm(View view)
@@ -269,8 +301,18 @@ public class MainActivity extends AppCompatActivity {
             String value5 = extras.getString("Extra String5");
             Log.i("TAG",value5);
             // departuretime in unix.
-            departureInUnixtime = extras.getInt("Extra String6");
-            Log.i("TAG", "departure unixtime"+String.valueOf(departureInUnixtime));
+            departureInUnixtimeSec = extras.getInt("Extra String6");
+
+            departureInUnixtimeMilliSec = departureInUnixtimeSec;
+            Long readydepartureLong = new Long(departureInUnixtimeSec);
+            departureTimemilliSecLongInsertFinal =1463545376000L;//readydepartureLong*1000;
+            Log.i("TAG", "departure unixtime"+String.valueOf(departureInUnixtimeSec));
+            Log.i("TAG", "departure departureInUnixtimeMilliSec"+String.valueOf(departureInUnixtimeMilliSec));
+            Log.i("TAG", "departure readydepartureLong"+String.valueOf(readydepartureLong));
+            Log.i("TAG", "departure departureTimemilliSecLongInsertFinal"+String.valueOf(departureTimemilliSecLongInsertFinal));
+
+
+
 
 
             TextView view = (TextView) findViewById(R.id.departure_time);
@@ -286,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
 
             // departureTime in unix time:
             TextView view5 = (TextView) findViewById(R.id.edit_message5);
-            view5.setText(String.valueOf(departureInUnixtime));
+            view5.setText(String.valueOf(departureInUnixtimeSec));
 
         }
 

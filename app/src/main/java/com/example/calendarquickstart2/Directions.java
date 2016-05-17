@@ -35,7 +35,7 @@ public class Directions extends AppCompatActivity {
     String eventTimeMillisAsString;
     private String finalDetination;
     String origin;
-    private int departure_time_UnixMillisec;
+    private int departure_time_Unixsec;
     private String arrival_time;
 
     @Override
@@ -124,8 +124,9 @@ public class Directions extends AppCompatActivity {
                 // return this the departre tme to the alarm clock.
                 departure_time =responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getText();
                 Log.i("departure_time", "Directions onSuccess: departure_time "+ departure_time);
-                departure_time_UnixMillisec=responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getValue();
-                Log.i("TAG", "onSuccess: departure_time_UnixMillisec"+ departure_time_UnixMillisec);
+                departure_time_Unixsec =responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getValue();
+
+                Log.i("TAG", "onSuccess: ny departure_time_Unixsec"+ departure_time_Unixsec);
 
 
                 // check if its the right end adress.
@@ -147,7 +148,7 @@ public class Directions extends AppCompatActivity {
                 intent.putExtra("Extra String3",destination);
                 intent.putExtra("Extra String4",eventName);
                 intent.putExtra("Extra String5",arrival_time);
-                intent.putExtra("Extra String6",departure_time_UnixMillisec);
+                intent.putExtra("Extra String6", departure_time_Unixsec);
 
 
                 // shtart the new activity

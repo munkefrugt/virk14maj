@@ -27,7 +27,7 @@ public class PopUpWindow extends AppCompatActivity {
             public void onClick(View v1)
             {
                 mainActivity.alarmTone.stop();
-                //Intent mainIntent = new Intent(PopUp.this, MainActivity.class);
+                //Intent mainIntent = new Intent(PopUpWindow.this, MainActivity.class);
                 //startActivity(mainIntent);
                 Log.i("StopAlarmknap", "onClick: stopknap");
             }
