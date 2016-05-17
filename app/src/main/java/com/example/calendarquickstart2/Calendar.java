@@ -177,7 +177,7 @@ public class Calendar extends Activity
                 // check the value
                 Log.i("eventTimeMillis", "onClick: "+eventTimeMillis);
 
-                Intent intentGson = new Intent(getApplicationContext(), Gson.class);
+                Intent intentGson = new Intent(getApplicationContext(), Directions.class);
 
                 intentGson.putExtra("destination",destination);
                 intentGson.putExtra("eventTimeMillis",eventTimeMillis);
@@ -545,10 +545,10 @@ public class Calendar extends Activity
             // here the value is set to 27 hours (1 day and 3 hours)
             c.add(java.util.Calendar.DAY_OF_MONTH, 1); // milliseceonds to midnight
             c.set(java.util.Calendar.HOUR_OF_DAY, 0);//
-            c.set(java.util.Calendar.MINUTE, 0);
+            c.set(java.util.Calendar.MINUTE, 1);
             c.set(java.util.Calendar.SECOND, 0);
             c.set(java.util.Calendar.MILLISECOND, 0);
-            //long next3amtimeInmillisecAsUnixTime= c.getTimeInMillis();
+            //long nextMidnigtiInmillisecAsUnixTime= c.getTimeInMillis();
 
             //*********************** slet det under her muligvis
             long howManyMillisecleftTo3amFromNow = (c.getTimeInMillis() - System.currentTimeMillis());
@@ -558,7 +558,7 @@ public class Calendar extends Activity
             // check if it makes sense
             Date time = c.getTime();
             Log.i("TAG", "getNext3amtimeInMilliSecAsUnixTime: time at 3 o clock"+time);
-            System.out.println("time at 3 "+time);
+            System.out.println("time at midnight "+time);
             long timeNow = System.currentTimeMillis();
             System.out.println(timeNow);
             System.out.println("milisec left to midnight:   " + howManyMillisecleftTo3amFromNow);
@@ -569,13 +569,13 @@ public class Calendar extends Activity
 
 
             // here we add the current time to the missing time to 3 am.
-            //long next3amtimeInmillisecAsUnixTime = System.currentTimeMillis() + howManyMillisecleftTo3amFromNow;
+            //long nextMidnigtiInmillisecAsUnixTime = System.currentTimeMillis() + howManyMillisecleftTo3amFromNow;
             // the result that gets returned:
             System.out.println("System.currentTimeMillis()  : " + System.currentTimeMillis());
 
-            long next3amtimeInmillisecAsUnixTime=howManyMillisecleftTo3amFromNow +System.currentTimeMillis();
-            System.out.println("return this value: next3amtimeInmillisecAsUnixTime : " + next3amtimeInmillisecAsUnixTime);
-            return next3amtimeInmillisecAsUnixTime;
+            long nextMidnigtiInmillisecAsUnixTime=howManyMillisecleftTo3amFromNow +System.currentTimeMillis();
+            System.out.println("return this value: nextMidnigtiInmillisecAsUnixTime : " + nextMidnigtiInmillisecAsUnixTime);
+            return nextMidnigtiInmillisecAsUnixTime;
         }
          //*********************************************************************************************************************
          //*********************************************************************************************************************

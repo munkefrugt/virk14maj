@@ -13,7 +13,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
 
-public class Gson extends AppCompatActivity {
+public class Directions extends AppCompatActivity {
 
     ListView listView;
     Response responseObj;
@@ -35,6 +35,8 @@ public class Gson extends AppCompatActivity {
     String eventTimeMillisAsString;
     private String finalDetination;
     String origin;
+    private int departure_time_UnixMillisec;
+    private String arrival_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,21 +70,21 @@ public class Gson extends AppCompatActivity {
             destination = extras.getString("destination");
             Log.i("TAG",destination);
             finalDetination=splitdestinationString(destination);
-            Log.i("tag", "Gson onCreate: finalDetination :"+ finalDetination);
-            Log.i("tag", "Gson onCreate: eventTimeMillis from calendar API:"+ eventTimeMillis);
+            Log.i("tag", "Directions onCreate: finalDetination :"+ finalDetination);
+            Log.i("tag", "Directions onCreate: eventTimeMillis from calendar API:"+ eventTimeMillis);
 
             // convert the type long to string so it can be used in the URL, and devide by 1000, because
             // it needs seconds not milliSec.
             enventTimeinSec = String.valueOf(eventTimeMillis/1000);
-            Log.i("tag", "Gson onCreate: enventTimeinSec from calendar API:"+ enventTimeinSec);
+            Log.i("tag", "Directions onCreate: enventTimeinSec from calendar API:"+ enventTimeinSec);
 
             //check and compare http://www.epochconverter.com/
 
-            Log.i("tag", "Gson onCreate: destination from calendar API test1:"+destination);
-            Log.i("tag", "Gson onCreate: eventName:"+eventName);
+            Log.i("tag", "Directions onCreate: destination from calendar API test1:"+destination);
+            Log.i("tag", "Directions onCreate: eventName:"+eventName);
 
             origin = extras.getString("origin");
-            Log.i("TAG", "Gson origin"+origin);
+            Log.i("TAG", "Directions origin"+origin);
 
             // extract the time from the eventTimeMillis (ex. eventTimeMillis:2016-05-09T07:00:00.000+02:00 - to 07:00
 
@@ -103,12 +105,12 @@ public class Gson extends AppCompatActivity {
         String url = "https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+destination+"&arrival_time="+enventTimeinSec+"&mode=transit&key=AIzaSyDPx6zlmEEAbqUdX8Gr7tlxNips9Ld5cI4";
         Log.i("URL test", "onCreate: " + url);
 
-        // MAKE API CALLS
+        // MAKE API CALLS to Directions
         client = new AsyncHttpClient();
-        client.get(Gson.this, url, new AsyncHttpResponseHandler() {
+        client.get(Directions.this, url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                Log.i("gson", "gson onSuccess: " +origin);
                 String responestr = new String(responseBody);
 
                 // instatiate gson object.
@@ -117,15 +119,18 @@ public class Gson extends AppCompatActivity {
 
                 startAdress =responseObj.getRoutes().get(0).getLegs().get(0).getStart_address();
 
+
+
                 // return this the departre tme to the alarm clock.
                 departure_time =responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getText();
-                Log.i("departure_time", "Gson onSuccess: departure_time "+ departure_time);
-                String arrival_time=responseObj.getRoutes().get(0).getLegs().get(0).getArrival_time().getText();
+                Log.i("departure_time", "Directions onSuccess: departure_time "+ departure_time);
+                departure_time_UnixMillisec=responseObj.getRoutes().get(0).getLegs().get(0).getDeparture_time().getValue();
+                Log.i("TAG", "onSuccess: departure_time_UnixMillisec"+ departure_time_UnixMillisec);
 
 
                 // check if its the right end adress.
                 String destinationOutPutCheck =responseObj.getRoutes().get(0).getLegs().get(0).getEnd_address();
-                Log.i("destinationOutPutCheck", "Gson : destinationOutPutCheck "+ destinationOutPutCheck);
+                Log.i("destinationOutPutCheck", "Directions : destinationOutPutCheck "+ destinationOutPutCheck);
 
 
 
@@ -133,15 +138,16 @@ public class Gson extends AppCompatActivity {
                 // husk man kan få arrival time i unix eller i am/pm
                 arrival_time = String.valueOf(responseObj.getRoutes().get(0).getLegs().get(0).getArrival_time().getValue());
 
-                Log.i("Gson startAdress", startAdress);
+                Log.i("Directions startAdress", startAdress);
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
-                intent.putExtra("Extra String",departure_time);
+                intent.putExtra("departureTime",departure_time);
                 intent.putExtra("Extra String2",startAdress);
                 intent.putExtra("Extra String3",destination);
                 intent.putExtra("Extra String4",eventName);
                 intent.putExtra("Extra String5",arrival_time);
+                intent.putExtra("Extra String6",departure_time_UnixMillisec);
 
 
                 // shtart the new activity

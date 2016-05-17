@@ -41,11 +41,14 @@ public class MainActivity extends AppCompatActivity {
     EditText origin;
     Intent intent;
     private String startlocation;
+    private String departureTime;
+    private int departureInUnixtime;
+
 
     // we are getting the desired arival time in (type)DateTime and the destinationfrom the calendar api.
     // convert time to unix time
     //
-    // send the 3 inputs to the Gson class, togther with the point of origin, that we get from the user.
+    // send the 3 inputs to the Directions class, togther with the point of origin, that we get from the user.
     // to to return the departure.
     // We send the departure time to the alarm clock, that sets the time some time erlier than the departure,
     // default 60 minnuttes.
@@ -65,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        alarmTone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
         origin = (EditText) findViewById(R.id.writeOrigin); // Jeg har tilføjet denne linje
 
@@ -110,21 +116,32 @@ public class MainActivity extends AppCompatActivity {
         {
             public void run()
             {
+
+
                 Log.i("I Audio run-metode", "run: I audioen");
                 //sæt lyd på fra din notificationsmanager.
-                notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-                alarmTone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
 
+
+                //startNotification();
 
                 //morningStart();
             }
-        }, calendarMorning.getTimeInMillis()-calNow.getTimeInMillis());
+            // tiden der skal indsættes er ikke unix time, men tid i milisec siden appen er started,
+            // så vil man gerne have den til at ringe efter 10 sec, kan man skrive 10000); på næste
+            // linje i stedet
+        },4000);// calendarMorning.getTimeInMillis()-calNow.getTimeInMillis());
 
         // start pop up vindue
-        PopUpIntent = new Intent(getApplicationContext(), PopUpWindow.class);
-        startActivity(PopUpIntent);
+        //***PopUpIntent = new Intent(getApplicationContext(), PopUpWindow.class);
+        //***startActivity(PopUpIntent);
     }
+
+    private void startNotification() {
+
+
+    }
+
     //MORGENALARMPOPUP
     public void morningStart()
     {
@@ -161,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendarEvening.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
     //starter intentSettings samt sætter morningCalendar til sand
-    public void setTime(View view)
+    public void morgenPopUp(View view)
     {
         //
         //test
@@ -237,23 +254,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void recieveDatafromDirecetionsApi() {
-        // get Strings from the Drirections API, (Gson.class)
+        // get Strings from the Drirections API, (Directions.class)
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            String value = extras.getString("Extra String");
-            Log.i("TAG",value);
+            departureTime = extras.getString("departureTime");
+            Log.i("TAG",departureTime);
             String value2 = extras.getString("Extra String2");
-            Log.i("TAG",value);
+            Log.i("TAG",departureTime);
             String value3 = extras.getString("Extra String3");
             Log.i("TAG",value3);
             String value4 = extras.getString("Extra String4");
             Log.i("TAG",value4);
             String value5 = extras.getString("Extra String5");
             Log.i("TAG",value5);
+            // departuretime in unix.
+            departureInUnixtime = extras.getInt("Extra String6");
+            Log.i("TAG", "departure unixtime"+String.valueOf(departureInUnixtime));
+
 
             TextView view = (TextView) findViewById(R.id.departure_time);
-            view.setText(value);
+            view.setText(departureTime);
 
             TextView view2 = (TextView) findViewById(R.id.edit_message2);
             view2.setText(value2);
@@ -262,8 +283,10 @@ public class MainActivity extends AppCompatActivity {
             view3.setText(value3);
             TextView view4 = (TextView) findViewById(R.id.edit_message4);
             view4.setText(value4);
+
+            // departureTime in unix time:
             TextView view5 = (TextView) findViewById(R.id.edit_message5);
-            view5.setText(value5);
+            view5.setText(String.valueOf(departureInUnixtime));
 
         }
 
